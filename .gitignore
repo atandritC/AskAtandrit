@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Local environments and secrets
+.venv/
+.env
+.env.*
+!.env.example
+
+# Personal resume and future visitor uploads
+data/resume/*
+data/uploads/
