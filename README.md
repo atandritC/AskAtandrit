@@ -5,15 +5,16 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 ## Current progress
 
 - Reads text from one PDF resume in `data/resume/`; the PDF can be replaced without changing the code.
-- Streams a single question and the resume text to Groq, printing the answer as it is generated. The system prompt asks for grounded, honest answers.
-- FastAPI dependencies are installed; the API and recruiter-facing web interface are not built yet.
+- Uses Groq to extract a structured candidate profile from the resume and validates the result with Pydantic.
+- The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python calculations for per-role and total experience are planned as a later step.
+- A streaming answer function is present; the API and recruiter-facing web interface are not built yet.
 - Personal resume files and API secrets are excluded from Git.
 
 ## Requirements
 
 - Python 3.14 or newer
 - [uv](https://docs.astral.sh/uv/)
-- A Groq API key for the chat script
+- A Groq API key for the profile parser
 
 ## Setup
 
@@ -34,18 +35,18 @@ GROQ_API_KEY=your_key_here
 
 Keep `.env` private; it is ignored by Git.
 
-## Read the resume
-
-```bash
-uv run python read_resume.py
-```
-
-This extracts and prints the text from the resume PDF.
-
-## Try a candidate question
+## Parse and inspect the candidate profile
 
 ```bash
 uv run python -m portfolio_chatbot.chat
 ```
 
-The script prompts for one question, sends it with the resume text to Groq, and prints the answer as it streams in. Do not commit your `.env` file or resume PDF.
+The current CLI sends the resume to Groq, validates the returned profile with Pydantic, and prints it as JSON. The output may contain personal information, so inspect it locally and do not commit or share it.
+
+## Read the resume without the LLM
+
+```bash
+uv run python read_resume.py
+```
+
+This extracts and prints the text from the resume PDF. Do not commit your `.env` file or resume PDF.
