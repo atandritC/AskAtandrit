@@ -5,8 +5,9 @@ from groq import Groq
 from portfolio_chatbot.profile import CandidateProfile
 from portfolio_chatbot.resume import read_resume
 from portfolio_chatbot.experience_calculator import (
-    calculate_duration_years,
-    calculate_total_experience_years,
+    calculate_duration_months,
+    calculate_total_experience_months,
+    format_experience_months,
 )
 
 MODEL = "openai/gpt-oss-120b"
@@ -30,8 +31,8 @@ You are a precise resume information extractor. Convert the supplied resume into
 - Read the resume semantically; section headings may vary. Include internships under experience when the resume identifies them as internships or work experience.
 - Include only projects and experience supported by the resume. Do not create entries for sections that are absent.
 - For each experience entry, put only the employer name in organization. Put its city, region, and country in location; if the location is absent or unclear, use null.
-- Keep the period as written in the resume. Set duration_years to null; Python will calculate each role's duration later from verified dates.
-- Set total_experience_years to null. Python will calculate overall experience later from verified work dates, accounting for overlapping roles.
+- Keep the period as written in the resume. Set duration_months and duration_display to null; Python will calculate each role's duration from verified dates, counting the listed end month.
+- Set total_experience_months and total_experience_display to null. Python will calculate overall experience from verified work dates, counting end months and merging overlaps.
 - Extract skills only when the resume explicitly names them or clearly demonstrates them in a project or experience description. Do not infer proficiency levels.
 - Preserve names, dates, descriptions, and URLs as written where possible. Do not create, repair, or guess a URL.
 - Avoid duplicate entries. Keep descriptions concise while preserving relevant facts.
@@ -66,10 +67,16 @@ Return JSON only. Do not include Markdown fences, comments, or explanatory text.
     profile = CandidateProfile.model_validate_json(raw_json)
 
     for experience in profile.experience:
-        experience.duration_years = calculate_duration_years(experience)
+        experience.duration_months = calculate_duration_months(experience)
+        experience.duration_display = format_experience_months(
+            experience.duration_months
+        )
 
-    profile.total_experience_years = calculate_total_experience_years(
+    profile.total_experience_months = calculate_total_experience_months(
         profile.experience
+    )
+    profile.total_experience_display = format_experience_months(
+        profile.total_experience_months
     )
 
     return profile

@@ -6,7 +6,7 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 
 - Reads text from one PDF resume in `data/resume/`; the PDF can be replaced without changing the code.
 - Uses Groq to extract a structured candidate profile from the resume and validates the result with Pydantic.
-- The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python calculates per-role durations and total experience from extracted dates, merging overlapping roles to avoid double-counting.
+- The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python counts inclusive calendar months, merges overlapping roles for the total, and formats durations as years and months (for example, `1 year 9 months`).
 - A streaming answer function is present; the API and recruiter-facing web interface are not built yet.
 - Personal resume files and API secrets are excluded from Git.
 
@@ -35,13 +35,13 @@ GROQ_API_KEY=your_key_here
 
 Keep `.env` private; it is ignored by Git.
 
-## Parse and inspect the candidate profile
+## Run the chatbot
 
 ```bash
 uv run python -m portfolio_chatbot.chat
 ```
 
-The current CLI sends the resume to Groq, validates the returned profile with Pydantic, and prints it as JSON. The output may contain personal information, so inspect it locally and do not commit or share it.
+The CLI parses the resume into a validated candidate profile, calculates and formats experience durations in Python, asks one question, and streams an answer grounded in that profile. The profile contains personal information and is sent to Groq; keep it private and do not commit or share it.
 
 ## Read the resume without the LLM
 
@@ -57,4 +57,4 @@ This extracts and prints the text from the resume PDF. Do not commit your `.env`
 uv run pytest
 ```
 
-The tests cover per-role duration, overlapping roles, missing dates, and fixed reference dates for current roles.
+The tests cover inclusive per-role duration, overlapping roles, missing dates, fixed reference dates for current roles, and years-and-months formatting.
