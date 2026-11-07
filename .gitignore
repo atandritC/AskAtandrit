@@ -8,6 +8,8 @@ build/
 dist/
 wheels/
 *.egg-info/
+node_modules/
+.vite/
 
 # Local environments and secrets
 .venv/
