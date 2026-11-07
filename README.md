@@ -50,3 +50,11 @@ uv run python read_resume.py
 ```
 
 This extracts and prints the text from the resume PDF. Do not commit your `.env` file or resume PDF.
+
+## Run tests
+
+```bash
+uv run pytest
+```
+
+The tests cover per-role duration, overlapping roles, missing dates, and fixed reference dates for current roles.
