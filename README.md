@@ -7,7 +7,7 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 - Reads text from one PDF resume in `data/resume/`; the PDF can be replaced without changing the code.
 - Uses Groq to extract a structured candidate profile from the resume and validates the result with Pydantic.
 - The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python counts inclusive calendar months, merges overlapping roles for the total, and formats durations as years and months (for example, `1 year 9 months`).
-- A FastAPI backend is available with a health check and a streaming `/chat` endpoint. The recruiter-facing web interface is not built yet.
+- A FastAPI backend is available with a health check and a streaming `/chat` endpoint. It accepts multiple `.txt`, text-based `.pdf`, and `.docx` attachments as extra context. The recruiter-facing web interface is not built yet.
 - Personal resume files and API secrets are excluded from Git.
 
 ## Requirements
@@ -49,7 +49,7 @@ The CLI parses the resume into a validated candidate profile, calculates and for
 uv run uvicorn portfolio_chatbot.api:app --reload
 ```
 
-Open `http://127.0.0.1:8000/docs` to try the API. `POST /chat` accepts a conversation and streams a reply. The caller sends earlier messages with each request; the API does not save conversations. The parsed resume profile is reused while the server runs. Restart the server after replacing the resume.
+Open `http://127.0.0.1:8000/docs` to try the API. `POST /chat` accepts a conversation, optional `.txt`, text-based `.pdf`, or `.docx` attachments, and streams a reply. Attachments can provide extra context for any question. The caller sends earlier messages and any attachments it wants considered with each request; the API does not save conversations or attachments. The parsed resume profile is reused while the server runs. Restart the server after replacing the resume. Scanned PDFs need OCR and are not readable yet.
 
 ## Read the resume without the LLM
 
