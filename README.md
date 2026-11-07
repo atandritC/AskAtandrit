@@ -7,7 +7,7 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 - Reads text from one PDF resume in `data/resume/`; the PDF can be replaced without changing the code.
 - Uses Groq to extract a structured candidate profile from the resume and validates the result with Pydantic.
 - The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python counts inclusive calendar months, merges overlapping roles for the total, and formats durations as years and months (for example, `1 year 9 months`).
-- A streaming answer function is present; the API and recruiter-facing web interface are not built yet.
+- A FastAPI backend is available with a health check and a streaming `/chat` endpoint. The recruiter-facing web interface is not built yet.
 - Personal resume files and API secrets are excluded from Git.
 
 ## Requirements
@@ -42,6 +42,14 @@ uv run python -m portfolio_chatbot.chat
 ```
 
 The CLI parses the resume into a validated candidate profile, calculates and formats experience durations in Python, asks one question, and streams an answer grounded in that profile. The profile contains personal information and is sent to Groq; keep it private and do not commit or share it.
+
+## Run the API
+
+```bash
+uv run uvicorn portfolio_chatbot.api:app --reload
+```
+
+Open `http://127.0.0.1:8000/docs` to try the API. `POST /chat` accepts a conversation and streams a reply. The caller sends earlier messages with each request; the API does not save conversations. The parsed resume profile is reused while the server runs. Restart the server after replacing the resume.
 
 ## Read the resume without the LLM
 

@@ -42,18 +42,19 @@ Be professional, concise, and specific. Answer the question directly, and mentio
 """
 
 
-def ask_candidate(question: str, profile: CandidateProfile) -> Iterator[str]:
+def ask_candidate(
+    messages: list[dict[str, str]], profile: CandidateProfile
+) -> Iterator[str]:
     profile_json = profile.model_dump_json(indent=2)
+
+    system_content = (
+        f"{SYSTEM_PROMPT}\n\n"
+        f"Candidate profile (JSON):\n<profile>\n{profile_json}\n</profile>"
+    )
 
     response = client.chat.completions.create(
         model="openai/gpt-oss-120b",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": f"Candidate profile (JSON):\n{profile_json}\n\nQuestion:\n{question}",
-            },
-        ],
+        messages=[{"role": "system", "content": system_content}, *messages],
         stream=True,
     )
 
@@ -66,7 +67,9 @@ def ask_candidate(question: str, profile: CandidateProfile) -> Iterator[str]:
 if __name__ == "__main__":
     profile = parse_candidate_profile(client)
     question = input("Ask Anything about Atandrit...")
-    for text in ask_candidate(question, profile):
+    conversation = [{"role": "user", "content": question}]
+
+    for text in ask_candidate(conversation, profile):
         print(text, end="", flush=True)
 
     print()
