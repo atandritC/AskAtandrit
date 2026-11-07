@@ -4,6 +4,10 @@ from groq import Groq
 
 from portfolio_chatbot.profile import CandidateProfile
 from portfolio_chatbot.resume import read_resume
+from portfolio_chatbot.experience_calculator import (
+    calculate_duration_years,
+    calculate_total_experience_years,
+)
 
 MODEL = "openai/gpt-oss-120b"
 
@@ -59,4 +63,13 @@ Return JSON only. Do not include Markdown fences, comments, or explanatory text.
     if not raw_json:
         raise ValueError("The model returned an empty candidate profile.")
 
-    return CandidateProfile.model_validate_json(raw_json)
+    profile = CandidateProfile.model_validate_json(raw_json)
+
+    for experience in profile.experience:
+        experience.duration_years = calculate_duration_years(experience)
+
+    profile.total_experience_years = calculate_total_experience_years(
+        profile.experience
+    )
+
+    return profile

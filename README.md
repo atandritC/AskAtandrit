@@ -6,7 +6,7 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 
 - Reads text from one PDF resume in `data/resume/`; the PDF can be replaced without changing the code.
 - Uses Groq to extract a structured candidate profile from the resume and validates the result with Pydantic.
-- The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python calculations for per-role and total experience are planned as a later step.
+- The profile includes projects, skills, experience, organization locations, and the original date period from the resume. Python calculates per-role durations and total experience from extracted dates, merging overlapping roles to avoid double-counting.
 - A streaming answer function is present; the API and recruiter-facing web interface are not built yet.
 - Personal resume files and API secrets are excluded from Git.
 

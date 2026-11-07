@@ -16,6 +16,11 @@ class Experience(BaseModel):
     period: str | None = None
     duration_years: float | None = None
     details: list[str] = Field(default_factory=list)
+    start_year: int | None = None
+    start_month: int | None = Field(default=None, ge=1, le=12)
+    end_year: int | None = None
+    end_month: int | None = Field(default=None, ge=1, le=12)
+    is_current: bool | None = None
 
 
 class CandidateProfile(BaseModel):
