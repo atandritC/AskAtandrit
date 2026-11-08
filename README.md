@@ -173,7 +173,7 @@ Additional limits include 1 MB per attached file (2.5 MB combined), 20 messages,
 
 ## Deploy to Vercel
 
-The repository is configured to build the React website and serve the FastAPI app from the repository root.
+The repository is configured to build the website and serve the FastAPI app from the repository root.
 
 1. Import the repository into Vercel, using the repository root as the project root.
 2. Add `GROQ_API_KEY` to Vercel environment variables for each deployment environment. Keep it out of frontend settings and source control.
@@ -194,7 +194,7 @@ Vercel can start fresh function instances at any time. The profile cache is temp
 
 <div align="center">
 
-**Ask.Atandrit** &nbsp; · &nbsp; Built with Python, FastAPI, React, and Groq
+**Ask.Atandrit** &nbsp; · &nbsp; Built with Python, FastAPI, and Groq
 
 [Try the live chatbot →](https://ask-atandrit.vercel.app/)
 
