@@ -12,6 +12,13 @@ const suggestions = [
   { eyebrow: '03 · SELECTED WORK', title: 'Projects & skills', question: 'What projects has Atandrit worked on, and what skills did he use?' },
 ]
 
+const MAX_FILES = 3
+const MAX_FILE_BYTES = 1_000_000
+const MAX_TOTAL_FILE_BYTES = 2_500_000
+const MAX_MESSAGES = 20
+const MAX_MESSAGE_CHARS = 4_000
+const MAX_CONVERSATION_CHARS = 40_000
+
 function Brand({ compact = false }) {
   return <div className={`brand ${compact ? 'brand-compact' : ''}`} aria-label="Ask.Atandrit">
     <span className="brand-copy"><strong>Ask.Atandrit</strong>{!compact && <small>YOUR CANDIDATE ASSISTANT</small>}</span>
@@ -39,11 +46,13 @@ export default function App() {
   const [error, setError] = useState('')
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [dragging, setDragging] = useState(false)
+  const [downloadNotice, setDownloadNotice] = useState(false)
   const fileInput = useRef(null)
   const textarea = useRef(null)
   const endOfMessages = useRef(null)
   const menuButton = useRef(null)
   const closeButton = useRef(null)
+  const downloadNoticeTimer = useRef(null)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -51,6 +60,8 @@ export default function App() {
   }, [theme])
 
   useEffect(() => endOfMessages.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }), [messages])
+
+  useEffect(() => () => clearTimeout(downloadNoticeTimer.current), [])
 
   useEffect(() => {
     if (!drawerOpen) return undefined
@@ -84,12 +95,21 @@ export default function App() {
   function addFiles(incoming) {
     const accepted = [...incoming].filter((file) => /\.(txt|pdf|docx)$/i.test(file.name))
     const rejected = [...incoming].filter((file) => !/\.(txt|pdf|docx)$/i.test(file.name))
-    setFiles((current) => {
-      const unique = [...current]
-      for (const file of accepted) if (!unique.some((item) => item.name === file.name && item.size === file.size && item.lastModified === file.lastModified)) unique.push(file)
-      return unique
-    })
-    setError(rejected.length ? 'Please choose a .txt, .pdf, or .docx file.' : '')
+    const tooLarge = accepted.filter((file) => file.size > MAX_FILE_BYTES)
+    const smallFiles = accepted.filter((file) => file.size <= MAX_FILE_BYTES)
+    const unique = [...files]
+    for (const file of smallFiles) if (!unique.some((item) => item.name === file.name && item.size === file.size && item.lastModified === file.lastModified)) unique.push(file)
+    let nextFiles = unique
+    if (unique.length > MAX_FILES) {
+      nextFiles = unique.slice(0, MAX_FILES)
+      setError(`Attach no more than ${MAX_FILES} files at a time.`)
+    } else if (unique.reduce((total, file) => total + file.size, 0) > MAX_TOTAL_FILE_BYTES) {
+      nextFiles = files
+      setError('Keep all attached files together under 2.5 MB.')
+    } else if (rejected.length) setError('Please choose a .txt, .pdf, or .docx file.')
+    else if (tooLarge.length) setError('Each file must be 1 MB or smaller.')
+    else setError('')
+    setFiles(nextFiles)
     if (fileInput.current) fileInput.current.value = ''
   }
 
@@ -98,6 +118,14 @@ export default function App() {
     if ((!content && !files.length) || busy) return
     const userMessage = { role: 'user', content: content || 'Please take a look at the attached file.', fileNames: files.map((file) => file.name) }
     const nextMessages = [...messages, userMessage]
+    if (nextMessages.length > MAX_MESSAGES) {
+      setError('This conversation is getting long. Start a new conversation to continue.')
+      return
+    }
+    if (nextMessages.reduce((total, message) => total + message.content.length, 0) > MAX_CONVERSATION_CHARS) {
+      setError('This conversation is getting long. Start a new conversation to continue.')
+      return
+    }
     setMessages([...nextMessages, { role: 'assistant', content: '', streaming: true }])
     setDraft('')
     setBusy(true)
@@ -146,6 +174,12 @@ export default function App() {
     textarea.current?.focus()
   }
 
+  function handleResumeDownload() {
+    setDownloadNotice(true)
+    clearTimeout(downloadNoticeTimer.current)
+    downloadNoticeTimer.current = setTimeout(() => setDownloadNotice(false), 2400)
+  }
+
   function handleSubmit(event) {
     event.preventDefault()
     sendMessage()
@@ -164,7 +198,7 @@ export default function App() {
     <button className="new-chat-button" onClick={newConversation}><Plus size={17} strokeWidth={1.8} /> New conversation</button>
     <div className="side-section">
       <p className="section-label">QUICK LINKS</p>
-      <a className="side-link resume-link" href="/resume" target="_blank" rel="noreferrer"><ArrowDownToLine size={16} /> Download resume</a>
+      <a className="side-link resume-link" href="/resume" target="_blank" rel="noreferrer" onClick={handleResumeDownload}><ArrowDownToLine size={16} /> Download resume</a>
       <button className="side-link" onClick={() => fileInput.current?.click()}><Paperclip size={16} /> Upload a file</button>
     </div>
     <div className="side-section about-section">
@@ -213,7 +247,7 @@ export default function App() {
         <form className={`composer ${dragging ? 'composer-dragging' : ''}`} onSubmit={handleSubmit}>
           {dragging && <div className="drop-overlay"><Paperclip size={18} /> Drop files to attach</div>}
           <label className="sr-only" htmlFor="message-input">Ask anything about Atandrit</label>
-          <textarea id="message-input" ref={textarea} value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={handleKeyDown} placeholder="Ask anything about Atandrit…" rows={2} disabled={busy} />
+          <textarea id="message-input" ref={textarea} value={draft} onChange={(event) => setDraft(event.target.value)} onKeyDown={handleKeyDown} placeholder="Ask anything about Atandrit…" rows={2} maxLength={MAX_MESSAGE_CHARS} disabled={busy} />
           <div className="composer-tools">
             <div className="composer-actions"><button type="button" className="attach-button" onClick={() => fileInput.current?.click()} disabled={busy}><Paperclip size={15} /><span>Attach a file</span></button><span className="file-hint">TXT, PDF, DOCX</span></div>
             <button className="send-button" type="submit" disabled={busy || (!draft.trim() && !files.length)} aria-label={busy ? 'Response in progress' : 'Send message'}>{busy ? <Sparkles className="busy-icon" size={17} /> : <ArrowUp size={19} />}</button>
@@ -223,6 +257,7 @@ export default function App() {
         <p className="composer-note">AI responses are based on Atandrit’s shared profile and your materials.</p>
       </div>
     </main>
+    {downloadNotice && <div className="download-toast" role="status" aria-live="polite" aria-atomic="true"><ArrowDownToLine size={16} /> Download started…</div>}
     {dragging && <div className="global-drop-hint" aria-hidden="true">Drop files to add them to your conversation</div>}
   </div>
 }

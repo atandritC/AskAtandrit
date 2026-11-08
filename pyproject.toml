@@ -29,3 +29,9 @@ build-backend = "uv_build"
 dev = [
     "pytest>=9.2.0",
 ]
+
+[tool.vercel.scripts]
+build = "python build_frontend.py"
+
+[tool.vercel.fastapi.static]
+cdn = true

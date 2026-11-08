@@ -16,7 +16,7 @@ api_key = os.getenv("GROQ_API_KEY")
 if not api_key:
     raise ValueError("GROQ_API_KEY is missing. Add it to the project-root .env file.")
 
-client = Groq(api_key=api_key)
+client = Groq(api_key=api_key, timeout=45.0, max_retries=0)
 
 SYSTEM_PROMPT = """
 # ROLE
@@ -83,12 +83,16 @@ def ask_candidate(
         model="openai/gpt-oss-120b",
         messages=[{"role": "system", "content": system_content}, *messages],
         stream=True,
+        max_completion_tokens=1_000,
     )
 
-    for chunk in response:
-        text = chunk.choices[0].delta.content
-        if text:
-            yield text
+    try:
+        for chunk in response:
+            text = chunk.choices[0].delta.content
+            if text:
+                yield text
+    finally:
+        response.close()
 
 
 if __name__ == "__main__":

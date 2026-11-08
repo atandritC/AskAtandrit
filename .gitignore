@@ -19,6 +19,7 @@ node_modules/
 
 # Personal resume and future visitor uploads
 data/resume/*
+!data/resume/public-resume.pdf
 data/uploads/
 
 # Personal project notes
