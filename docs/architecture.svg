@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="740" viewBox="0 0 1400 740" role="img" aria-labelledby="title description">
+  <title id="title">Ask.Atandrit architecture</title>
+  <desc id="description">A recruiter asks a question in the website. The API checks the request, combines it with the candidate profile and conversation, and sends it to Groq. The answer streams back to the website. The resume and uploaded files are read as context.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 10 5 0 10z" fill="#52718a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#16324f" flood-opacity=".08"/>
+    </filter>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { fill: #16324f; font-size: 27px; font-weight: 700; }
+      .subtitle { fill: #6f7882; font-size: 15px; }
+      .card { fill: #fff; stroke: #d8e1e8; stroke-width: 1.5; }
+      .card-title { fill: #16324f; font-size: 18px; font-weight: 700; }
+      .body { fill: #5f6e7b; font-size: 14px; }
+      .label { fill: #0a3d62; font-size: 12px; font-weight: 600; }
+      .node { fill: #eaf2f7; stroke: #c7d8e4; stroke-width: 1.5; }
+      .node-title { fill: #16324f; font-size: 15px; font-weight: 700; }
+      .arrow { fill: none; stroke: #52718a; stroke-width: 2.2; marker-end: url(#arrow); }
+      .dashed { stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+  <rect width="1400" height="740" rx="24" fill="#f5f8fa"/>
+  <text class="title" x="52" y="56">Ask.Atandrit · how a question becomes an answer</text>
+  <text class="subtitle" x="52" y="84">The site uses the candidate’s resume and the visitor’s materials as context. Chats and uploads are not stored by the app.</text>
+
+  <g filter="url(#shadow)">
+    <rect class="card" x="52" y="190" width="250" height="190" rx="18"/>
+    <rect class="card" x="358" y="190" width="260" height="190" rx="18"/>
+    <rect class="card" x="674" y="176" width="310" height="218" rx="18"/>
+    <rect class="card" x="1040" y="190" width="306" height="190" rx="18"/>
+    <rect class="node" x="95" y="520" width="230" height="112" rx="16"/>
+    <rect class="node" x="405" y="520" width="260" height="112" rx="16"/>
+    <rect class="node" x="725" y="520" width="250" height="112" rx="16"/>
+    <rect class="node" x="1035" y="520" width="270" height="112" rx="16"/>
+  </g>
+
+  <text class="card-title" x="78" y="232">Recruiter website</text>
+  <text class="body" x="78" y="265">Ask about Atandrit, attach a file,</text>
+  <text class="body" x="78" y="288">or download the resume.</text>
+  <text class="label" x="78" y="337">React chat interface</text>
+
+  <text class="card-title" x="384" y="232">Request checks</text>
+  <text class="body" x="384" y="265">Limits message size, file size,</text>
+  <text class="body" x="384" y="288">and simultaneous chat requests.</text>
+  <text class="label" x="384" y="337">FastAPI · /chat</text>
+
+  <text class="card-title" x="700" y="218">Candidate context</text>
+  <text class="body" x="700" y="251">Validated profile · conversation so far</text>
+  <text class="body" x="700" y="274">Resume facts and extracted file text</text>
+  <text class="label" x="700" y="333">Profile cached while the instance runs</text>
+
+  <text class="card-title" x="1066" y="232">Groq language model</text>
+  <text class="body" x="1066" y="265">Answers within the candidate’s</text>
+  <text class="body" x="1066" y="288">professional background and fit.</text>
+  <text class="label" x="1066" y="337">Streams answer back to the site</text>
+
+  <text class="node-title" x="120" y="565">Resume PDF</text>
+  <text class="body" x="120" y="590">One approved copy</text>
+  <text class="node-title" x="430" y="565">Resume reader + parser</text>
+  <text class="body" x="430" y="590">Extract · structure · calculate</text>
+  <text class="node-title" x="750" y="565">Visitor attachment</text>
+  <text class="body" x="750" y="590">TXT · PDF · DOCX</text>
+  <text class="node-title" x="1060" y="565">File text reader</text>
+  <text class="body" x="1060" y="590">Extracts readable content</text>
+
+  <path class="arrow" d="M302 285H350"/>
+  <text class="label" x="306" y="273">question</text>
+  <path class="arrow" d="M618 285H666"/>
+  <path class="arrow" d="M984 285H1032"/>
+  <text class="label" x="990" y="273">profile + context</text>
+  <path class="arrow" d="M1194 184V126H176V184"/>
+  <text class="label" x="640" y="117">answer streams back</text>
+
+  <path class="arrow" d="M325 576H397"/>
+  <path class="arrow" d="M535 514V430H829V400"/>
+  <text class="label" x="550" y="418">profile facts</text>
+  <path class="arrow" d="M975 576H1027"/>
+  <path class="arrow" d="M1170 514V430H1180V386"/>
+  <path class="arrow dashed" d="M850 514V405"/>
+  <path class="arrow dashed" d="M177 514V405H145V386"/>
+  <text class="label" x="62" y="430">resume download</text>
+</svg>

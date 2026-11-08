@@ -13,28 +13,7 @@ An AI portfolio project that will let recruiters ask questions about a candidate
 
 ## How it works
 
-```mermaid
-flowchart LR
-    recruiter[Recruiter] -->|asks a question| website[React chat website]
-    website -->|conversation and optional files| guard[Request safeguards]
-    guard --> api[FastAPI]
-
-    resume[(Resume PDF)] -->|read text| profile_ai[Groq profile extractor]
-    api -->|first chat request| profile_ai
-    profile_ai -->|structured profile| python[Validate and calculate experience]
-    python --> profile_cache[Candidate profile cached in API memory]
-
-    profile_cache -->|candidate facts| answer_ai
-    api -->|conversation history| answer_ai
-    api -->|uploaded TXT, PDF, or DOCX| file_reader[Extract file text]
-    file_reader --> answer_ai
-    answer_ai -->|stream answer| api
-    api --> website
-    website --> recruiter
-
-    website -->|download resume| resume_route[FastAPI resume route]
-    resume_route --> resume
-```
+![Ask.Atandrit architecture diagram](docs/architecture.svg)
 
 The website sends the conversation history and any attached files with each question. The API does not save chats or uploads; it keeps the parsed profile in memory while the server runs.
 
