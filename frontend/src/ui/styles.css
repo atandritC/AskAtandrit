@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
 
-:root { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #26394a; background: #f4f6f7; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --navy: #16324f; --sapphire: #0a3d62; --steel: #6f7882; --silver: #c7cdd3; --surface: #fff; --page: #f4f6f7; --sidebar: #f7f8f9; --border: #dce2e7; --muted: #73808d; --soft: #edf2f5; --composer-shadow: 0 12px 34px rgb(22 50 79 / 9%); }
+:root { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #26394a; background: #eef0ef; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --navy: #16324f; --sapphire: #0a3d62; --steel: #6f7882; --silver: #c7cdd3; --surface: #f8f7f4; --page: #eef0ef; --sidebar: #f2f3f1; --border: #d9dfe2; --muted: #73808d; --soft: #e9eeef; --composer-shadow: 0 12px 34px rgb(22 50 79 / 7%); }
 :root[data-theme='dark'] { color-scheme: dark; color: #e5ebf0; background: #101b26; --navy: #e7edf3; --sapphire: #8ab9d9; --steel: #aebac5; --silver: #71808d; --surface: #182633; --page: #101b26; --sidebar: #14212d; --border: #2a3b49; --muted: #a1afba; --soft: #20313f; --composer-shadow: 0 12px 34px rgb(0 0 0 / 22%); }
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; }
