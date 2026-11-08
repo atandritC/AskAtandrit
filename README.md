@@ -1,6 +1,8 @@
-# Portfolio Chatbot
+# Ask.Atandrit
 
-An AI portfolio project that will let recruiters ask questions about a candidate's experience, projects, and skills. The goal is to answer from the candidate's real information and be clear when the available information does not support an answer.
+**[Open the live chatbot](https://ask-atandrit.vercel.app/)**
+
+A conversational portfolio for recruiters to explore Atandrit’s experience, projects, and skills. Answers are grounded in his resume and any materials a visitor chooses to share.
 
 ## Current progress
 

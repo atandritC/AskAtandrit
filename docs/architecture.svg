@@ -48,13 +48,13 @@
   <text class="label" x="384" y="337">FastAPI · /chat</text>
 
   <text class="card-title" x="700" y="218">Candidate context</text>
-  <text class="body" x="700" y="251">Validated profile · conversation so far</text>
-  <text class="body" x="700" y="274">Resume facts and extracted file text</text>
+  <text class="body" x="700" y="251">Resume profile · conversation so far</text>
+  <text class="body" x="700" y="274">Optional files · extracted text</text>
   <text class="label" x="700" y="333">Profile cached while the instance runs</text>
 
   <text class="card-title" x="1066" y="232">Groq language model</text>
-  <text class="body" x="1066" y="265">Answers within the candidate’s</text>
-  <text class="body" x="1066" y="288">professional background and fit.</text>
+  <text class="body" x="1066" y="265">Grounded in the candidate’s</text>
+  <text class="body" x="1066" y="288">background and shared materials.</text>
   <text class="label" x="1066" y="337">Streams answer back to the site</text>
 
   <text class="node-title" x="120" y="565">Resume PDF</text>
@@ -70,7 +70,7 @@
   <text class="label" x="306" y="273">question</text>
   <path class="arrow" d="M618 285H666"/>
   <path class="arrow" d="M984 285H1032"/>
-  <text class="label" x="990" y="273">profile + context</text>
+  <text class="label" x="700" y="305">Question + profile + file text → Groq</text>
   <path class="arrow" d="M1194 184V126H176V184"/>
   <text class="label" x="640" y="117">answer streams back</text>
 
