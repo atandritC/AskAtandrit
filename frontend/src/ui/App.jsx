@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import {
-  ArrowDownToLine, ArrowUp, FileText, Menu, Moon, Plus,
+  ArrowDownToLine, ArrowUp, FileText, Github, Menu, Moon, Plus,
   Sun, X, Paperclip, Sparkles,
 } from 'lucide-react'
 
@@ -205,7 +205,12 @@ export default function App() {
       <p className="section-label">ABOUT THIS CHAT</p>
       <p>Ask about Atandrit’s background, work, or fit for a role.</p>
     </div>
-    <p className="sidebar-foot">Built to make introductions easier.</p>
+    <div className="sidebar-footer">
+      <p className="sidebar-foot">Built to make introductions easier.</p>
+      <a className="github-link" href="https://github.com/atandritC/AskAtandrit" target="_blank" rel="noreferrer" aria-label="View Ask.Atandrit source code on GitHub">
+        <Github size={15} /> Project on GitHub
+      </a>
+    </div>
   </>
 
   return <div className="app-shell" onDragOver={(event) => { event.preventDefault(); setDragging(true) }} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDragging(false) }} onDrop={(event) => { event.preventDefault(); setDragging(false); addFiles(event.dataTransfer.files) }}>

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
 
-:root { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #26394a; background: #eef0ef; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --navy: #16324f; --sapphire: #0a3d62; --steel: #6f7882; --silver: #c7cdd3; --surface: #f8f7f4; --page: #eef0ef; --sidebar: #f2f3f1; --border: #d9dfe2; --muted: #73808d; --soft: #e9eeef; --composer-shadow: 0 12px 34px rgb(22 50 79 / 7%); }
+:root { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #26394a; background: #ebeeed; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; --navy: #16324f; --sapphire: #0a3d62; --steel: #6f7882; --silver: #c7cdd3; --surface: #f4f2ed; --page: #ebeeed; --sidebar: #eff0ed; --border: #d7dddf; --muted: #73808d; --soft: #e5e9e8; --composer-shadow: 0 12px 34px rgb(22 50 79 / 6%); }
 :root[data-theme='dark'] { color-scheme: dark; color: #e5ebf0; background: #101b26; --navy: #e7edf3; --sapphire: #8ab9d9; --steel: #aebac5; --silver: #71808d; --surface: #182633; --page: #101b26; --sidebar: #14212d; --border: #2a3b49; --muted: #a1afba; --soft: #20313f; --composer-shadow: 0 12px 34px rgb(0 0 0 / 22%); }
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; }
@@ -23,7 +23,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .side-link svg { color: var(--sapphire); }
 .resume-link { background: var(--soft); border-color: transparent; }
 .about-section p:last-child { margin: 0; max-width: 206px; color: var(--muted); font-size: 12px; line-height: 1.7; }
-.sidebar-foot { margin: auto 0 13px; color: #8b969f; font-size: 10px; }
+.sidebar-footer { display: grid; gap: 10px; margin-top: auto; }
+.sidebar-foot { margin: 0; color: #8b969f; font-size: 10px; }
+.github-link { display: inline-flex; align-items: center; align-self: flex-start; gap: 8px; min-height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: 9px; color: var(--muted); font-size: 11px; font-weight: 600; text-decoration: none; transition: background .18s, border-color .18s, color .18s; }
+.github-link:hover { border-color: #9eb6c8; background: var(--soft); color: var(--navy); }
 .main-panel { position: relative; display: flex; flex: 1; min-width: 0; min-height: 100dvh; flex-direction: column; background: var(--surface); }
 .topbar { height: 68px; flex: 0 0 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 34px; border-bottom: 1px solid color-mix(in srgb, var(--border), transparent 48%); }
 .topbar-caption { color: var(--muted); font-size: 12px; }
@@ -137,7 +140,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
   .message-body { max-width: 88%; }
   .message-text { font-size: 13px; line-height: 1.75; }
   .drawer-scrim { display: block; position: fixed; z-index: 6; inset: 0; border: 0; background: rgb(9 22 32 / 42%); }
-  .mobile-drawer { display: flex; position: fixed; z-index: 7; inset: 0 auto 0 0; width: min(300px, 86vw); padding: 25px 20px; background: var(--sidebar); box-shadow: 12px 0 35px rgb(0 0 0 / 16%); }
+  .mobile-drawer { display: flex; position: fixed; z-index: 7; inset: 0 auto 0 0; width: min(300px, 86vw); flex-direction: column; align-items: stretch; overflow-y: auto; overscroll-behavior: contain; padding: 25px 20px; background: var(--sidebar); box-shadow: 12px 0 35px rgb(0 0 0 / 16%); }
   .mobile-drawer .sidebar-top { margin-bottom: 26px; }
   .mobile-drawer .sidebar-top .drawer-close { display: inline-flex; }
 }
