@@ -46,7 +46,7 @@ Ask.Atandrit turns a portfolio into a conversation. Ask about experience, projec
 
 </div>
 
-The browser sends the conversation and any attached files with each question. The API extracts readable text, combines it with the in-memory candidate profile, and streams a response. Earlier messages and files are supplied again by the browser with each request; the API does not persist them.
+The browser sends the conversation and any attached files with each question. The API extracts readable text, combines it with the in-memory candidate profile, and streams a response. The profile includes email, phone, and professional links when present in the resume; it does not include a home address. Earlier messages and files are supplied again by the browser with each request; the API does not persist them.
 
 ## Get started
 

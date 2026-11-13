@@ -30,9 +30,33 @@ class Experience(BaseModel):
     is_current: bool | None = None
 
 
+class ContactInfo(BaseModel):
+    email: str | None = Field(
+        default=None,
+        description="Email address explicitly listed in the resume.",
+    )
+    phone: str | None = Field(
+        default=None,
+        description="Phone number explicitly listed in the resume.",
+    )
+    linkedin_url: str | None = Field(
+        default=None,
+        description="Exact LinkedIn URL listed in the resume.",
+    )
+    github_url: str | None = Field(
+        default=None,
+        description="Exact GitHub URL listed in the resume.",
+    )
+    portfolio_url: str | None = Field(
+        default=None,
+        description="Exact portfolio URL listed in the resume.",
+    )
+
+
 class CandidateProfile(BaseModel):
     name: str | None = None
     summary: str | None = None
+    contact: ContactInfo = Field(default_factory=ContactInfo)
     total_experience_months: int | None = Field(
         default=None,
         description="Overall professional experience in whole calendar months, calculated by Python from verified work dates.",
