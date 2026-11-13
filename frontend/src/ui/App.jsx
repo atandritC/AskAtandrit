@@ -59,7 +59,9 @@ export default function App() {
     localStorage.setItem('ask-atandrit-theme', theme)
   }, [theme])
 
-  useEffect(() => endOfMessages.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }), [messages])
+  useEffect(() => {
+    endOfMessages.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }, [messages])
 
   useEffect(() => () => clearTimeout(downloadNoticeTimer.current), [])
 
